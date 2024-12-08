@@ -9,7 +9,7 @@ fun main() {
     
     parsedLeft.zip(parsedRight) { left, right -> listOfDistances.add(kotlin.math.abs(left-right)) }
     
-    println("Distance List: ${listOfDistances.sum()}")
+    println("Distance Sum: ${listOfDistances.sum()}")
 }
 
 fun parseToSortedLists(input: String, delimitier: String): Pair<List<Int>, List<Int>> {
