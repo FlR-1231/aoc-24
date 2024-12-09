@@ -3,25 +3,14 @@ fun main() {
     
     """.trimIndent()
 
-    val result = parseInputToLists(inputString)
+    val parsedInput = parseInputToLists(inputString)
     
-    var amountOfValidReports = 0
-    for (list in result) {
-        val listOfChange = mutableListOf<Int>()
-
-        var isValid = true
-        list.zipWithNext().forEach { (current, next) ->
-            if (isTolerable(current, next)) {
-                listOfChange.add(current - next)
-            } else {
-                isValid = false
-                return@forEach
+    val amountOfValidReports = parsedInput.count { report ->
+        val listOfChange = report.zipWithNext()
+            .mapNotNull { (current, next) ->
+                if (isTolerable(current, next)) current - next else null
             }
-        }
-
-        if (isValid && isAllPositiveOrAllNegative(listOfChange)) {
-            amountOfValidReports++
-        }
+        listOfChange.size == report.size - 1 && isAllPositiveOrAllNegative(listOfChange)
     }
 
     println("There are $amountOfValidReports valid reports.")
